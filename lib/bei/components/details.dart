@@ -42,7 +42,7 @@ class _DetailsState extends State<Details> {
 
         shrinkWrap: true,
         // itemCount: items.length,
-        itemCount: 1,
+        itemCount: 6,
         
         itemBuilder: (context, index) {
           return Container(
