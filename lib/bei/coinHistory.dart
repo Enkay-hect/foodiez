@@ -200,6 +200,7 @@ class _coinHistoryState extends State<coinHistory> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(20),
+                      
                       decoration: BoxDecoration(
                         color: Color.fromARGB(255, 2, 53, 100),
                         border: Border(bottom: BorderSide(color: Colors.white)),
@@ -223,6 +224,7 @@ class _coinHistoryState extends State<coinHistory> {
                           Row(
                             children: [
                               Container(
+                                margin: EdgeInsets.only(bottom: 40),
                                 child: Row(
                                     children: List.generate(
                                   3,
@@ -240,6 +242,7 @@ class _coinHistoryState extends State<coinHistory> {
                               ),
                               Spacer(),
                               Container(
+                                margin: EdgeInsets.only(bottom: 40),
                                 child: Row(
                                     children: List.generate(
                                         10, (index) => htContainer())),

@@ -10,7 +10,9 @@ class CoinTable extends StatefulWidget {
 class _CoinTableState extends State<CoinTable> {
   List<Map<String, dynamic>> coinData = [];
 
-  final List<String> headers = ['userId', 'id', 'title', 'body'];
+  final List<String> headers = ['Game Type', 'Prediction', 'Stake', 'Odds', 'Game Result', 'Status', 'Payout', 'Date'];
+  final List<String> celldatas = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  
 
   @override
   void initState() {
@@ -41,7 +43,7 @@ class _CoinTableState extends State<CoinTable> {
         
       child: DataTable(
                 // horizontalMargin: 22.0, // Adjust the horizontal margin as needed
-
+            columnSpacing: 100.0,
             columns: [
               for (var header in headers)
                 DataColumn(
@@ -50,7 +52,8 @@ class _CoinTableState extends State<CoinTable> {
             ],
 
           rows: [
-            for (int i = 0; i < coinData.length; i++)
+            
+            for (var celldata in celldatas)
               DataRow(
                 color: MaterialStateColor.resolveWith(
                 (Set<MaterialState> states) {
@@ -61,18 +64,28 @@ class _CoinTableState extends State<CoinTable> {
                   return Color(0xFF001234); // Use the default color
                 },
               ),
+
+                  cells: [
+                    for (var data in celldatas)
+                      DataCell(
+                        Container(
+                          width: 100.0, // Set the width for this cell
+                          child: Text(data, style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                  ],
       
 
-                cells: [
-                  for (var header in headers)
-                    DataCell(
-                      Container(
-                          // padding: EdgeInsets.all(14), 
-                          child: Text('${coinData[i][header] ?? ""}', style: TextStyle(color: Colors.white),),
+                // cells: [
+                //   for (var header in headers)
+                //     DataCell(
+                //       Container(
+                //           // padding: EdgeInsets.all(14), 
+                //           child: Text('${coinData[i][header] ?? ""}', style: TextStyle(color: Colors.white),),
                           
-                      )
-                    ),
-                ],
+                //       )
+                //     ),
+                // ],
               ),
           ],
         ),
