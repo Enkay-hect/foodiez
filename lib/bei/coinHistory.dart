@@ -141,6 +141,8 @@ class coinHistory extends StatefulWidget {
 // }
 //
 
+List names = ["18/20 - 2010", "Game Type", 'Status'];
+
 class _coinHistoryState extends State<coinHistory> {
   @override
   Widget build(BuildContext context) {
@@ -151,18 +153,16 @@ class _coinHistoryState extends State<coinHistory> {
           children: [
             Expanded(
               flex: 1,
-                              
-             child: Container(
+              child: Container(
                   // height: MediaQuery.of(context).size.height,
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(5),
                   decoration: const BoxDecoration(
-                    color:
-                        Color(0xFF034F96) // Background color
-                    // border: Border.all(
-                    //   color: Colors.red, // Border color
-                    //   width: 2.0, // Border width
-                    // ),
-                  ),
+                      color: Color(0xFF034F96) // Background color
+                      // border: Border.all(
+                      //   color: Colors.red, // Border color
+                      //   width: 2.0, // Border width
+                      // ),
+                      ),
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -184,116 +184,78 @@ class _coinHistoryState extends State<coinHistory> {
                         child: Details(),
                       )
                     ],
-                  )
-                  ),
+                  )),
             ),
-
-
             Expanded(
               flex: 4,
               child: Container(
-                    height: MediaQuery.of(context).size.height,                  
-                    decoration:  BoxDecoration(
-                      color: Color(0xFF034F96), 
-                    ),
+                padding: EdgeInsets.only(left: 20),
+                height: MediaQuery.of(context).size.height,
 
-                  child: 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 2, 53, 100),
-                            border: Border.all(
-                              color: Color(0xFF034F96)
-                            )
+                decoration: BoxDecoration(
+                  color: Color(0xFF034F96),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 2, 53, 100),
+                        border: Border(bottom: BorderSide(color: Colors.white)),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 65),
+                                child: Text(
+                                  'My History',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 26,
+                                      decoration: TextDecoration.none),
+                                ),
+                              )
+                            ],
                           ),
-
-                          child: Column( 
-                          children: [
-                            Row(
-                              children: [
-                                  Container(
-                                      margin: EdgeInsets.only(bottom: 65),
-                                      child:  Text(
-                                              'My History',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 26,
-                                                  decoration: TextDecoration.none
-                                                  ),
-                                            ),
-                                      )
-                              ],
-                            ),
-                            
-
-                            Row(
-                              children: [
-                                
-                                  Container(
-                                    height: 40,
-                                    width: 100,
-                                    color: Colors.white,
-                                  ),
-
-                                        SizedBox(width: 20,),
-
-                                    Container(
-                                    height: 40,
-                                    width: 100,
-                                    color: Colors.white,
-                                  ),
-
-                                SizedBox(width: 20,),
-
-
-                                  Container(
-                                    height: 40,
-                                    width: 100,
-                                    color: Colors.white,
-                                  ),
-
-                                  SizedBox(width: 20,),
-                                  // Spacer(),
-
-                                  Container(
-                                    height: 40,
-                                    width: 100,
-                                    color: Colors.white,
-                                  ),
-
-                                      Spacer(),
-
-                                  Container(
-                                      child: 
-                                        Row(
-                                          children: List.generate(10, (index) => myContainer())
+                          Row(
+                            children: [
+                              Container(
+                                child: Row(
+                                    children: List.generate(
+                                  3,
+                                  (index) => Row(
+                                    children: [
+                                      dateContainer(
+                                        name: names[index],
                                       ),
-                                  )
-
-                                
-
-                              ],
-                            )
-                          ],
-
-
-                        ),
-
-                        ),                     
-
-
-
-
-                        Expanded(
-                          child: CoinTable()
+                                      SizedBox(
+                                          width:
+                                              16.0), // Adjust the width as needed
+                                    ],
+                                  ),
+                                )),
+                              ),
+                              Spacer(),
+                              Container(
+                                child: Row(
+                                    children: List.generate(
+                                        10, (index) => htContainer())),
+                              )
+                            ],
                           )
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                    Expanded(
+                        child: CoinTable()
+                    ),
+               
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -302,24 +264,50 @@ class _coinHistoryState extends State<coinHistory> {
   }
 }
 
-
-class myContainer extends StatelessWidget {
-  const myContainer({super.key});
+class htContainer extends StatelessWidget {
+  const htContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-          height: 40,
-          width: 35,
-          decoration: BoxDecoration(
-            color: Color(0xFF001234),
-            border: Border.all(color: Colors.white)
+    return Container(
+        height: 40,
+        width: 35,
+        decoration: BoxDecoration(
+            color: Color(0xFF001234), border: Border.all(color: Colors.white)),
+        child: Center(
+          child: Text(
+            'H',
+            style: TextStyle(fontSize: 18, color: Colors.white),
           ),
+        ));
+  }
+}
 
-          child: Center(
-          child: Text('H', style: TextStyle(fontSize: 18, color: Colors.white),),
+class dateContainer extends StatelessWidget {
+
+  const dateContainer({super.key, required this.name});
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      height: 40,
+      width: 150,
+      color: Colors.white,
+      child: Row(
+        children: [
+          Row(
+            children: [Text(name)],
+          ),
+          Spacer(),
+          Row(
+            children: [
+              Icon(Icons.sort),
+            ],
           )
-
-        );
+        ],
+      ),
+    );
   }
 }

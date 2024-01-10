@@ -38,18 +38,21 @@ class _CoinTableState extends State<CoinTable> {
       scrollDirection: Axis.horizontal,
       
       child: SingleChildScrollView(
-            child: DataTable(
-                columns: [
-                  for (var header in headers)
-                    DataColumn(
-                      label: Text(header, style: TextStyle(color: Colors.white),),
-                    ),
-                ],
+        
+      child: DataTable(
+                // horizontalMargin: 22.0, // Adjust the horizontal margin as needed
+
+            columns: [
+              for (var header in headers)
+                DataColumn(
+                  label: Text(header, style: TextStyle(color: Colors.white),),
+                ),
+            ],
 
           rows: [
             for (int i = 0; i < coinData.length; i++)
               DataRow(
-                        color: MaterialStateColor.resolveWith(
+                color: MaterialStateColor.resolveWith(
                 (Set<MaterialState> states) {
                   // Use a different color when the row is selected
                   if (states.contains(MaterialState.selected)) {
@@ -58,7 +61,7 @@ class _CoinTableState extends State<CoinTable> {
                   return Color(0xFF001234); // Use the default color
                 },
               ),
-              
+      
 
                 cells: [
                   for (var header in headers)

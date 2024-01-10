@@ -58,7 +58,7 @@ class _DetailsState extends State<Details> {
               ),
               
               margin: EdgeInsets.only(bottom: 20.0), // Adjust the margin as needed
-              padding: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.all(0),
               // width: MediaQuery.of(context).size.width,
               child: const ListTile(
                 
@@ -80,7 +80,7 @@ class _DetailsState extends State<Details> {
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 50,
+                                width: 70,
                               ),
                               Row(
                                 children: [
@@ -101,6 +101,7 @@ class _DetailsState extends State<Details> {
                               ),
                             ],
                           ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -112,7 +113,7 @@ class _DetailsState extends State<Details> {
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 133,
+                                width: 153,
                               ),
                               Row(
                                 children: [
@@ -144,7 +145,7 @@ class _DetailsState extends State<Details> {
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 130,
+                                width: 150,
                               ),
                               Row(
                                 children: [
@@ -176,7 +177,7 @@ class _DetailsState extends State<Details> {
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 205,
+                                width: 225,
                               ),
                               Row(
                                 children: [
@@ -208,7 +209,7 @@ class _DetailsState extends State<Details> {
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                width: 161,
+                                width: 181,
                               ),
                               // Spacer(),
                               // Expanded(child: Container()),
