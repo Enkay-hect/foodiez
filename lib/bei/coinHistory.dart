@@ -163,18 +163,20 @@ class _coinHistoryState extends State<coinHistory> {
                       //   width: 2.0, // Border width
                       // ),
                       ),
-                  child: const Column(
+                  child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Text(
+                          Container(
+                               padding: EdgeInsets.all(20),
+                            child: const Text(
                             'All Coin Stakes',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 26,
                                 decoration: TextDecoration.none),
-                          ),
+                          ),)
                         ],
                       ),
                       SizedBox(
