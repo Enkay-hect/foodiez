@@ -1,164 +1,130 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:my_food_app/bei/apiServices/apiClient.dart';
 
 class CoinTable extends StatefulWidget {
+  const CoinTable({super.key});
+
   @override
   _CoinTableState createState() => _CoinTableState();
 }
 
 class _CoinTableState extends State<CoinTable> {
-  List<Map<String, dynamic>> coinData = [];
-
-  final List<String> headers = [
-    'Game Type',
-    'Prediction',
-    'Stake',
-    'Odds',
-    'Game Result',
-    'Status',
-    'Payout',
-    'Date'
-  ];
-
-  final List<String> celldatas = [
-      '1', '2', '3', '4', '5', '6', '7', '8'
-  ];
-
-
-
-  @override
-    void initState() {
-      super.initState();
-      fetchData();
-    }
+  List<String> headers = [];
+  List<dynamic> dataList = [];
 
   Future<void> fetchData() async {
-  try {
-    final dynamic getData = await ApiClientService.get('/stake');
+    try {
+      final dynamic response = await ApiClientService.get('/dice');
 
-    if (getData is List<dynamic>) {
-      // Handle list data
-      List<dynamic> dataList = getData;
-      print('GET Data (List): $dataList');
-    } else if (getData is Map<String, dynamic>) {
-      // Handle map data
-      Map<String, dynamic> dataMap = getData;
-      print('GET Data (Map): $dataMap');
-    } else {
-      print('Unexpected response type');
+      if (response is Map<String, dynamic> &&
+          response['data'] is List<dynamic>) {
+        List<dynamic> data = response['data'];
+
+        if (data.isNotEmpty && data[0] is Map<String, dynamic>) {
+          headers = data[0].keys.toList();
+
+          dataList = data
+              .map((item) => headers.map((header) => item[header]).toList())
+              .toList();
+
+          print('GET Data (Headers): $headers');
+          print('GET Data (List): $dataList');
+        } else {
+          print('Unexpected data structure in the response.');
+        }
+      } else {
+        print('Unexpected response type or missing "data" field.');
+      }
+    } catch (e) {
+      print('GET Request failed: $e');
     }
-  } catch (e) {
-    print('GET Request failed: $e');
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: SingleChildScrollView(
-        child: DataTable(
-          // horizontalMargin: 22.0, // Adjust the horizontal margin as needed
-          columnSpacing: 100.0,
-          columns: [
-            for (var header in headers)
-              DataColumn(
-                label: Text(
-                  header,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-          ],
-
-          rows: [
-            for (var celldata in celldatas)
-            
-              HistoryTableRow(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  DataRow HistoryTableRow() {
-    return DataRow(
-              color: MaterialStateColor.resolveWith(
-                (Set<MaterialState> states) {
-                  // Use a different color when the row is selected
-                  if (states.contains(MaterialState.selected)) {
-                    return Color(0xFF001234); // Selected color
-                  }
-                  return Color(0xFF001234); // Use the default color
-                },
-              ),
-
-              cells: [
-                for (var data in celldatas)
-                  DataCell(
-                    Container(
-                      width: 100.0, // Set the width for this cell
-                      child: Text(
-                        data,
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SingleChildScrollView(
+              child: DataTable(
+                horizontalMargin: 8.0,
+                columnSpacing: 55.0,
+                columns: [
+                  for (var header in headers)
+                    DataColumn(
+                      label: Text(
+                        header,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                  ),
-              ],
-            );
+                ],
+                rows: [
+                  for (var rowData in dataList)
+                    DataRow(
+                      color: MaterialStateColor.resolveWith(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.selected)) {
+                            return Color(0xFF001234); // Selected color
+                          }
+                          return Color(0xFF001234); // Default color
+                        },
+                      ),
+                      cells: [
+                        for (var data in rowData)
+                          DataCell(
+                            Container(
+                              width: 100.0,
+                              child: Text(
+                                data?.toString() ?? '',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                ],
+              ),
+            ),
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
 
-// class _CoinTableState extends State<CoinTable> {
-//   List<Map<String, dynamic>> coinData = [];
 
-//     final List<String> headers = ['Game Type', 'Prediction', 'Stake', 'Odds', 'Game Result', 'Status', 'Payout', 'Date'];
+  // DataRow HistoryTableRow(List<dynamic> dataList) {
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData();
-//   }
+    
+  //   return DataRow(
+  //     color: MaterialStateColor.resolveWith(
+  //       (Set<MaterialState> states) {
+  //         if (states.contains(MaterialState.selected)) {
+  //           return Color(0xFF001234); // Selected color
+  //         }
+  //         return Color(0xFF001234); // Default color
+  //       },
+  //     ),
+  //      cells: [
+  //       for (var data in rowData)
+  //         DataCell(
+  //           Container(
+  //             width: 100.0,
+  //             child: Text(
+  //               data?.toString() ?? '',
+  //               style: TextStyle(color: Colors.white),
+  //             ),
+  //           ),
+  //         ),
+  //     ],
+  //   );
+  // }
 
-//   Future<void> fetchData() async {
-//     final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       setState(() {
-//         coinData = List<Map<String, dynamic>>.from(data);
-//       });
-//     } else {
-//       throw Exception('Failed to load data');
-//     }
-//   }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return SingleChildScrollView(
-//       scrollDirection: Axis.horizontal,
-//       child: SingleChildScrollView(
-//         child: DataTable(
-//           columns: [
-//             for (var header in headers)
-//               const DataColumn(
-//                 label: Text('header'),
-//               ),
-//           ],
-//           rows: [
-//             for (int i = 0; i < coinData.length; i++)
-//               DataRow(
-//                 cells: [
-//                   for (int j = 1; j <= 8; j++)
-//                     DataCell(
-//                       Text('${coinData[i]['userId'] ?? ""}'), // Replace 'userId' with your actual data key
-//                     ),
-//                 ],
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

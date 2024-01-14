@@ -33,38 +33,32 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-      
+      width: MediaQuery.of(context).size.width,
+      //MediaQuery.of(context).size.width,
       child: ListView.builder(
-        key: Key('uniqueKey'),
-        physics: AlwaysScrollableScrollPhysics(),
+        key: const Key('uniqueKey'),
+        physics: const AlwaysScrollableScrollPhysics(),
 
         shrinkWrap: true,
         // itemCount: items.length,
         itemCount: 6,
-        
+
         itemBuilder: (context, index) {
           return Container(
-            
-              decoration: BoxDecoration(
-                color: Color(0xFF001234), // Background color
-                borderRadius: BorderRadius.circular(10.0), // Border radius
+            width: 10,
+            decoration: BoxDecoration(
+              color: const Color(0xFF001234), // Background color
+              borderRadius: BorderRadius.circular(10.0), // Border radius
+            ),
 
-                border: Border.all(
-                    // color: Colors.red, // Border color
-                    // width: 2.0, // Border width
-                    ),
-              ),
-              
-              margin: EdgeInsets.only(bottom: 20.0), // Adjust the margin as needed
-              padding: EdgeInsets.all(0),
-              // width: MediaQuery.of(context).size.width,
-              child: const ListTile(
-                
-                  title: Column(
-                  children: [
-
+            margin: const EdgeInsets.only(
+                bottom: 20.0), // Adjust the margin as needed
+            padding: const EdgeInsets.all(0),
+            // width: MediaQuery.of(context).size.width,
+            child: const ListTile(
+              title: Column(
+                children: [
                   Row(
                     children: [
                       Column(
@@ -101,7 +95,6 @@ class _DetailsState extends State<Details> {
                               ),
                             ],
                           ),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -213,7 +206,7 @@ class _DetailsState extends State<Details> {
                               ),
                               // Spacer(),
                               // Expanded(child: Container()),
-                              
+
                               Row(
                                 children: [
                                   Text(
@@ -237,14 +230,10 @@ class _DetailsState extends State<Details> {
                       ),
                     ],
                   )
-
-
                 ],
               ),
-              ),
-
-              );
-
+            ),
+          );
         },
       ),
     );
