@@ -31,6 +31,7 @@ class _CoinTableState extends State<CoinTable> {
 
           print('GET Data (Headers): $headers');
           print('GET Data (List): $dataList');
+          
         } else {
           print('Unexpected data structure in the response.');
         }

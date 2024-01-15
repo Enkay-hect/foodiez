@@ -12,7 +12,6 @@ class ApiClientService {
     return _handleResponse(response);
   }
 
-
   static Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body) async {
     final response = await http.post(
       Uri.parse('$postUrl$path'),
