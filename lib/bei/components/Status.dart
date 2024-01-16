@@ -44,7 +44,7 @@ class _statusState extends State<status> {
     fetchData();
   }
 
-  String truncateText(String text, int maxLength) {
+  String shrinkText(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
     } else {
@@ -55,204 +55,177 @@ class _statusState extends State<status> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CarouselSlider.builder(
-          itemCount: dataList.length,
-          itemBuilder: (BuildContext context, int index, int realIndex) {
-            // Check if index is within the valid range
-            if (index >= 0 && index < dataList.length) {
-              // Access specific properties like id andn symbol from each object
-              final id = dataList[index]['id'];
-              final symbol = dataList[index]['symbol'];
-              final imageUrl = dataList[index]['image'];
-              final rank = dataList[index]['market_cap_rank'];
-              final priceChangeKey = 'price_change_24h';
-              final rawPriceChange = dataList[index][priceChangeKey];
+        body: Center(
+      child: CarouselSlider.builder(
+        itemCount: dataList.length,
+        itemBuilder: (BuildContext context, int index, int realIndex) {
+          // Check if index is within the valid range
+          if (index >= 0 && index < dataList.length) {
+            // Access specific properties like id andn symbol from each object
+            final id = dataList[index]['id'];
+            final symbol = dataList[index]['symbol'];
+            final imageUrl = dataList[index]['image'];
+            final rank = dataList[index]['market_cap_rank'];
+            final priceChangeKey = 'price_change_24h';
+            final rawPriceChange = dataList[index][priceChangeKey];
 
-              // Truncate the rawPriceChange value to a maximum length of 5 characters
-              final truncatedPriceChange =
-                  truncateText(rawPriceChange.toString(), 7);
+            // Truncate the rawPriceChange value to a maximum length of 5 characters
+            final truncatedPriceChange =
+                shrinkText(rawPriceChange.toString(), 7);
 
-              return Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width,
-                  padding:
-                      EdgeInsets.only(bottom: 20, top: 20, left: 10, right: 10),
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      border: Border.all(style: BorderStyle.none),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                height: 40,
-                                width: 40,
-                                margin: EdgeInsets.all(20),
-                                child:
-                                    // Image.network(imageUrl),
-                                    Image.network(
-                                  ' Image.network(imageUrl)',
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  (loadingProgress
-                                                          .expectedTotalBytes ??
-                                                      1)
-                                              : null,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  errorBuilder: (BuildContext context,
-                                      Object error, StackTrace? stackTrace) {
-                                    print('Error loading image: $error');
-                                    return Center(
-                                      child: Text('Error loading image'),
-                                    );
-                                  },
-                                ))
-                          ],
-                        ),
-                        Spacer(),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                width: 230,
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                          '$id \n$symbol \nRank: $rank',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                        )
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          '\$$truncatedPriceChange \n0.38% \n24hrs',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                          textAlign: TextAlign.end,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ));
-            } else {
-              // Return a placeholder widget or handle the out-of-range case
-              return Container(
-                width: 0, // Set to 0 to make it invisible
-              );
-            }
-          },
-          options: CarouselOptions(
-            height: 200,
-            // enlargeCenterPage: true,
-            // aspectRatio: 16 / 9,
-            autoPlay: true,
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enableInfiniteScroll: true,
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            viewportFraction: 0.8,
-            scrollDirection: Axis.horizontal,
-          ),
+            return Container(
+                height: 130,
+                width: MediaQuery.of(context).size.width,
+                padding:
+                    EdgeInsets.only(bottom: 20, top: 20, left: 10, right: 15),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(style: BorderStyle.none),
+                    borderRadius: BorderRadius.circular(18)),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 80,
+                            margin: EdgeInsets.only(left: 15),
+                            padding: EdgeInsets.all(18),
+
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: const Color.fromARGB(255, 10, 10, 10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0xFF7A8929),
+                                    offset: Offset(-6.4, -6.4),
+                                    blurRadius: 18,
+                                    spreadRadius: 0.0,
+                                  ),
+                                  BoxShadow(
+                                    color: Color(0xFF7A8929),
+                                    offset: Offset(1.4, 1.4),
+                                    blurRadius: 1,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ]),
+                            child: Image.network(
+                              "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+                              //   color: imgcolor,
+                              width: 35,
+                              height: 35,
+                            ),
+                            // Image.network(imageUrl),
+                            //     NetImageWidget()
+                          )
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: 230,
+                              child: Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        '$id \n$symbol \nRank: $rank',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      )
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        '\$$truncatedPriceChange \n0.38% \n24hrs',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                        textAlign: TextAlign.end,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+          } else {
+            // Return a placeholder widget or handle the out-of-range case
+            return Container(
+              width: 0, // Set to 0 to make it invisible
+            );
+          }
+        },
+        options: CarouselOptions(
+          height: 140,
+          // enlargeCenterPage: true,
+          // aspectRatio: 16 / 9,
+          autoPlay: true,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          viewportFraction: 0.8,
+          scrollDirection: Axis.horizontal,
         ),
       ),
-    );
+    ));
   }
 }
 
-// class CoinGeckoApi extends StatelessWidget {
-//   const CoinGeckoApi({
+// class NetImageWidget extends StatelessWidget {
+//   const NetImageWidget({
 //     super.key,
 //   });
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return Container(
-//         height: 150,
-//         width: MediaQuery.of(context).size.width,
-//         padding: EdgeInsets.all(40),
-//         margin: EdgeInsets.all(20),
-//         decoration: BoxDecoration(
-//             color: Colors.red,
-//             border: Border.all(style: BorderStyle.none),
-//             borderRadius: BorderRadius.circular(20)),
-//         child: Center(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Container(
-//                     margin: EdgeInsets.all(20),
-//                     child: Text('Icon'),
-//                   )
-//                 ],
-//               ),
-//               Spacer(),
-//               Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Container(
-//                       width: 250,
-//                       child: Row(
-//                         children: [
-//                           Column(
-//                             children: [
-//                               Text(
-//                                 'XDC Network \nXDC \nRank: 100',
-//                                 style: TextStyle(
-//                                     color: Colors.white, fontSize: 15),
-//                               )
-//                             ],
-//                           ),
-//                           Spacer(),
-//                           Column(
-//                             children: [
-//                               Text(
-//                                 '\$0.0004 \n0.38% \n24hrs',
-//                                 style: TextStyle(
-//                                     color: Colors.white, fontSize: 15),
-//                                 textAlign: TextAlign.end,
-//                               )
-//                             ],
-//                           )
-//                         ],
-//                       )),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ));
+//     return Image.network(
+//                                     ' Image.network(imageUrl)',
+//                                     loadingBuilder: (BuildContext context,
+//       Widget child,
+//       ImageChunkEvent? loadingProgress) {
+//     if (loadingProgress == null) {
+//       return child;
+//     } else {
+//       return Center(
+//         child: CircularProgressIndicator(
+//           value: loadingProgress
+//                       .expectedTotalBytes !=
+//                   null
+//               ? loadingProgress
+//                       .cumulativeBytesLoaded /
+//                   (loadingProgress
+//                           .expectedTotalBytes ??
+//                       1)
+//               : null,
+//         ),
+//       );
+//     }
+//                                     },
+//                                     errorBuilder: (BuildContext context,
+//       Object error, StackTrace? stackTrace) {
+//     print('Error loading image: $error');
+//     return Center(
+//       child: Text('Error loading image'),
+//     );
+//                                     },
+//                                   );
 //   }
 // }
+
+
+
+
+
+
+
