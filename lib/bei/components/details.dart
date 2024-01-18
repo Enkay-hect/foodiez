@@ -37,7 +37,7 @@ class _DetailsState extends State<Details> {
       width: MediaQuery.of(context).size.width,
       //MediaQuery.of(context).size.width,
       child: ListView.builder(
-        key: const Key('uniqueKey'),
+        key: const Key('uniqueKey'), //unique id
         physics: const AlwaysScrollableScrollPhysics(),
 
         shrinkWrap: true,

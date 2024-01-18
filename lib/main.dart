@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_food_app/bei/coinHistory.dart';
 import 'package:my_food_app/bei/components/Status.dart';
+import 'package:my_food_app/bei/components/imageCarousel.dart';
+import 'package:my_food_app/screens/happybowl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +17,13 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: status()
-      // coinHistory(),
+      home: 
+      // status()
+      //  coinHistory(),
+      ImageCarousel(),
 
-      // home: happybowl(),
-      //home: landing(),
+      // happybowl(),
+      // home: landing(),
     );
   }
 }

@@ -13,6 +13,7 @@ class CoinTable extends StatefulWidget {
 class _CoinTableState extends State<CoinTable> {
   List<String> headers = [];
   List<dynamic> dataList = [];
+  
 
   Future<void> fetchData() async {
     try {
