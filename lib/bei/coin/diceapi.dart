@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class RaceData {
@@ -20,7 +21,7 @@ class RaceData {
 
   factory RaceData.fromJson(Map<String, dynamic> json) {
   return RaceData(
-    wallet: json['wallet'] ?? '', 
+    wallet: shortenWalletAddress(json['wallet'] ?? ''), 
     amount: json['amount'] != null ? double.tryParse(json['amount'].toString()) ?? 0.0 : 0.0, 
     prediction: json['prediction'] != null ? double.tryParse(json['prediction'].toString()) ?? 0.0 : 0.0, 
     odds: json['odds'] != null ? double.tryParse(json['odds'].toString()) ?? 0.0 : 0.0, 
@@ -45,6 +46,18 @@ Future<List<RaceData>> fetchOdds() async {
     }
   } catch (e) {
     throw Exception('Failed 2: $e');
+  }
+}
+
+
+
+String shortenWalletAddress(String address, {int prefixLength = 6, int suffixLength = 6}) {
+  if (address.length <= prefixLength + suffixLength) {
+    return address;
+  } else {
+    final String prefix = address.substring(0, prefixLength);
+    final String suffix = address.substring(address.length - suffixLength);
+    return '$prefix.....$suffix';
   }
 }
 
