@@ -20,13 +20,13 @@ class _ImageCarouselState extends State<ImageCarousel> {
 
       if (response.statusCode == 200) {
         final dynamic data = json.decode(response.body);
-
+        // print(data);
+        // print(data["response"]["data"][0]["url"]);
         setState(() {
           dataList.add(data);
         });
 
-        print(dataList);
-
+        // print(dataList);
       } else {
         print('Failed to fetch data. Status code: ${response.statusCode}');
       }
@@ -43,51 +43,35 @@ class _ImageCarouselState extends State<ImageCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Carousel'),
-    //   ),
-    //   body: FutureBuilder(
-    //     future: fetchData(),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         if (snapshot.hasError) {
-    //           return Center(
-    //             child: Text('Error: ${snapshot.error}'),
-    //           );
-    //         }
-
-    //         return buildCarousel();
-    //       } else {
-    //         return Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       }
-    //     },
-    //   ),
-    // );
-  }
-
-  Widget buildCarousel() {
-    return CarouselSlider(
-      items: dataList.map<Widget>((item) {
-        return Container(
-          margin: EdgeInsets.all(8.0),
-          child: Image.network(
-            item['image'], // Replace with your actual image URL key
-            fit: BoxFit.cover,
-          ),
-        );
-      }).toList(),
-      options: CarouselOptions(
-        aspectRatio: 16 / 9,
-        // enlargeCenterPage: true,
-        autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
-        viewportFraction: 1,
-      ),
+    return Scaffold(
+      body: buildCarousel(),
     );
   }
+
+Widget buildCarousel() {
+  return CarouselSlider(
+    items: dataList.map<Widget>((item) {
+      final length = item.length;
+      int currentIndex = dataList.indexOf(item); // Get the current index
+      String imageUrl = item["response"]["data"][currentIndex]["image"] ?? 'N/A';
+     
+      return Container(
+        height: 450,
+        width: 500,
+        margin: EdgeInsets.all(8.0),
+        child: Image.network(
+          'https://webadmin.smartcryptobet.co/images/ads/$imageUrl',
+          fit: BoxFit.contain,
+        ),
+      );
+    }).toList(),
+    options: CarouselOptions(
+      aspectRatio: 16 / 9,
+      autoPlay: true,
+      autoPlayInterval: Duration(seconds: 3),
+      viewportFraction: 1,
+    ),
+  );
+}
+
 }
